@@ -12,3 +12,6 @@ def blog_home(request):
 
 def home(request):
     return HttpResponse("Welcome to Blog Portal")
+
+def about(request):
+    return HttpResponse("This about page of blog")
