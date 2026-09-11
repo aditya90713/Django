@@ -1,9 +1,54 @@
-<a href="{% url 'create_post' %}">+ New Post</a>
+<!-- Navigation -->
+<nav>
+    <a href="{% url 'blog_home' %}">Home</a>
+    |
+    <a href="{% url 'blog_about' %}">About</a>
+
+    {% if user.is_authenticated %}
+        |
+        <a href="{% url 'create_post' %}">+ New Post</a>
+        |
+        <a href="{% url 'my_posts' %}">My Posts</a>
+        |
+        <span>Hello, {{ user.username }}</span>
+
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+
+    {% else %}
+        |
+        <a href="{% url 'login' %}">Login</a>
+        |
+        <a href="{% url 'signup' %}">Sign Up</a>
+    {% endif %}
+</nav>
+
 <hr>
-<hr>
-<h1>{{blog_name}}</h1>
+
+<h1>{{ blog_name }}</h1>
+{% comment %} 
 {% for post in posts %}
-  <h3><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h3>
-  <p>{{ post.content|truncatewords:20 }}</p>
-  <hr>
-{% endfor %}
+
+    <h3>
+        <a href="{% url 'post_detail' post.pk %}">
+            {{ post.title }}
+        </a>
+    </h3>
+
+    <p>{{ post.content|truncatewords:20 }}</p>
+
+    <p>
+        <small>
+            By {{ post.author.username }}
+        </small>
+    </p>
+
+    <hr>
+
+{% empty %}
+
+    <p>No posts available yet.</p>
+
+{% endfor %} {% endcomment %}

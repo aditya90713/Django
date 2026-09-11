@@ -1,0 +1,27 @@
+<h1>My Posts</h1>
+
+<a href="{% url 'blog_home' %}">← Back to Home</a>
+
+<hr>
+
+{% for post in posts %}
+
+    <h3>
+        <a href="{% url 'post_detail' post.pk %}">
+            {{ post.title }}
+        </a>
+    </h3>
+
+    <p>{{ post.content|truncatewords:20 }}</p>
+
+    <a href="{% url 'post_update' post.pk %}">Edit</a>
+    |
+    <a href="{% url 'post_delete' post.pk %}">Delete</a>
+
+    <hr>
+
+{% empty %}
+
+    <p>You haven't created any posts yet.</p>
+
+{% endfor %}
