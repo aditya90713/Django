@@ -52,3 +52,15 @@ def post_update(request, pk):
         form = PostForm(instance=post)                   # pre-fill form with existing values
 
     return render(request, 'blog/post_form.html', {'form': form, 'is_update': True})
+
+
+
+# blog/views.py
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.method == 'POST':
+        post.delete()                 # actually deletes the row from DB
+        return redirect('blog_home')
+
+    return render(request, 'blog/post_confirm_delete.html', {'post': post})
