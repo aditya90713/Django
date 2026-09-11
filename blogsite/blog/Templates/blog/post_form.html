@@ -1,0 +1,7 @@
+<!-- blog/templates/blog/post_form.html -->
+<h2>{% if is_update %}Edit Post{% else %}Create a New Post{% endif %}</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>

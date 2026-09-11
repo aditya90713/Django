@@ -2,4 +2,5 @@
 <p>{{post.content}}</p>
 <smal>Posted on {{post.created_at}}</small>
 <br>
+<a href="{% url 'post_update' post.pk %}">Edit</a>
 <a href="{% url 'blog_home' %}">Back to all posts</a>

@@ -26,7 +26,7 @@ def create_post(request):
     else:
         form = PostForm()                       # empty/unbound form for GET requests
 
-    return render(request, 'blog/create_post.html', {'form': form})
+    return render(request, 'blog/post_form.html', {'form': form})
     
     
     
@@ -38,3 +38,17 @@ def post_detail(request, pk):
         'blog/post_detail.html',
         {'post': post}
     )
+    
+    
+def post_update(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)   # bind new data onto existing row
+        if form.is_valid():
+            form.save()                                  # UPDATEs the row, doesn't create new
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = PostForm(instance=post)                   # pre-fill form with existing values
+
+    return render(request, 'blog/post_form.html', {'form': form, 'is_update': True})
