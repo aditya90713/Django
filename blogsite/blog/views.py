@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Post
 from .forms import PostForm
@@ -22,9 +22,19 @@ def create_post(request):
         form = PostForm(request.POST)
         if form.is_valid():                    # runs validation (required fields, max_length, etc.)
             form.save()                         # ModelForm.save() creates the Post row directly
-            return redirect('home')             # PRG pattern — see note below
+            return redirect('blog_home')             # PRG pattern — see note below
     else:
         form = PostForm()                       # empty/unbound form for GET requests
 
     return render(request, 'blog/create_post.html', {'form': form})
     
+    
+    
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    return render(
+        request,
+        'blog/post_detail.html',
+        {'post': post}
+    )
